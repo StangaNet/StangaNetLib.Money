@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <AssemblyName>StangaNetLib.Money</AssemblyName>
+    <RootNamespace>StangaNetLib.Money</RootNamespace>
+    <Version>1.0.0</Version>
+    <Description>Safe monetary primitives for .NET: minor-unit (cents) Money value object with EUR-first arithmetic, allocate/split, parse/format. Depends on StangaNetLib.Core.</Description>
+    <PackageTags>money;currency;eur;finance;valueobject;stanganet</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="StangaNetLib.Money.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StangaNetLib.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\build\**" Pack="true" PackagePath="build/" />
+  </ItemGroup>
+
+  <Target Name="StampBuildProps" BeforeTargets="GenerateNuspec">
+    <PropertyGroup>
+      <_BuildPropsFile>$(MSBuildThisFileDirectory)..\..\build\StangaNetLib.Money.props</_BuildPropsFile>
+    </PropertyGroup>
+    <ItemGroup>
+      <_BPLines Include="&lt;Project&gt;" />
+      <_BPLines Include="  &lt;ItemGroup&gt;" />
+      <_BPLines Include="    &lt;AssemblyAttribute Include=&quot;System.Reflection.AssemblyMetadataAttribute&quot;&gt;" />
+      <_BPLines Include="      &lt;_Parameter1&gt;StangaNetLib.Money&lt;/_Parameter1&gt;" />
+      <_BPLines Include="      &lt;_Parameter2&gt;$(Version)&lt;/_Parameter2&gt;" />
+      <_BPLines Include="    &lt;/AssemblyAttribute&gt;" />
+      <_BPLines Include="  &lt;/ItemGroup&gt;" />
+      <_BPLines Include="&lt;/Project&gt;" />
+    </ItemGroup>
+    <WriteLinesToFile
+      File="$(_BuildPropsFile)"
+      Lines="@(_BPLines)"
+      Overwrite="true"
+      Encoding="UTF-8" />
+    <Message Text="StangaNetLib.Money: stamped build props with version $(Version)" Importance="high" />
+  </Target>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\assets\package-icon.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\CHANGELOG.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>
